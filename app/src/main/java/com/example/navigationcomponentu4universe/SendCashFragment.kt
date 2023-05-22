@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -31,8 +32,20 @@ class SendCashFragment : Fragment() {
         binding.tvRecipient.text = "Send cash to ${args.receiverName}"
 
         binding.sendBtn.setOnClickListener {
+            if (binding.inputAmount.text.toString().isNotEmpty()) {
+                findNavController().navigate(
+                    SendCashFragmentDirections.actionSendCashFragmentToConfirmDialogFragment(
+                        args.receiverName,100L
+                    )
+                )
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Please specify amount.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
-
 
     }
 
